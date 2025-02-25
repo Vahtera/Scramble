@@ -9,6 +9,7 @@
 # 1.1.1 - Added Finnish Language Support
 # 1.1.2 - Added Help Screen
 # 1.1.3 - Fixed Command Line Arguments
+# 1.1.4 - OS compatibilty for clearing screen.
 # 
 # # Written by: Anna Vahtera
 #
