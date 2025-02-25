@@ -1,10 +1,20 @@
 # Word Scramble Game
-# Version: 2.1.4
-# Written by: Anna Vahtera
-# Last Updated: 2025-02-20
+# Scramble.py
+#
+# Version History:
+# 1.0.0 - Initial Release
+# 1.0.1 - Added Command Line Arguments
+# 1.1.0 - Added Language Support
+# 1.1.1 - Added Finnish Language Support
+# 1.1.2 - Added Help Screen
+# 
+# # Written by: Anna Vahtera
+#
 # This program is a word scramble game. The program reads a list of words from a file and scrambles the word.
 # The players have a limited number of turns to guess the word. The player gets points for guessing the word correctly.
 # The program uses ANSI escape codes to color the text.
+#
+
 import random
 import string
 import sys
@@ -20,7 +30,7 @@ iRnd = 0 # Round Number
 
 def displayHelp(): # Display Help Screen
     print("\n\nInstructions:\n")
-    print("Usage: Scramble.py [#players] [#rounds] [language]\n")
+    print("Usage: py Scramble.py [#players] [#rounds] [language]\n")
     print("Language is any of the following:")
     print("--english: English language. (Default)")
     print("--finnish: Finnish language.")
