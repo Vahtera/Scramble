@@ -1,3 +1,4 @@
+#
 # Word Scramble Game
 # Scramble.py
 #
@@ -10,8 +11,10 @@
 # 
 # # Written by: Anna Vahtera
 #
-# This program is a word scramble game. The program reads a list of words from a file and scrambles the word.
-# The players have a limited number of turns to guess the word. The player gets points for guessing the word correctly.
+# This program is a word scramble game.
+# It reads a list of words from a file and scrambles the word.
+# The players have a limited number of turns to guess the word.
+# The player gets points for guessing the word correctly.
 # The program uses ANSI escape codes to color the text.
 #
 
@@ -41,25 +44,6 @@ def displayHelp(): # Display Help Screen
     print("-r#: Number of rounds.")
     print("\nIf selecting the language, make sure the required language file is present [\"language.lst\"].\n")
     exit()
-
-
-def setMode(): # Set Program Language Mode
-    t = "english"
-    if arguments > 1:
-        for l in range(1, arguments):
-            tStr = sys.argv[l]
-            if tStr == "--finnish":
-                t = "finnish"
-            elif tStr == "--english":
-                t = "english"
-            elif tStr == "-h" or tStr == "--help":
-                displayHelp()
-            #elif tStr == "-r" or tStr == "--rules":
-            #    displayRules()
-    return t
-
-lang = setMode() # Default Language
-fileName = lang + ".lst" # File Name to Read the Words from
 
 # Color Definitions
 WHITE = "\033[37m" # White Text Color
@@ -187,39 +171,53 @@ text = {
 }
 
 def SetPlayers(): # Function to get the number of Players
-    r = 1 # Default to 1 Player
+    r = -1 # Default to 1 Player
     if arguments > 1:
         for l in range(1, arguments):
             if sys.argv[l][:2] == "-p":
                 r = sys.argv[l][2:]
-    else:
+    if r == -1:
         r = input(text["nPlayers"][lang]) or 1
-    
     return int(r)
 
 def SetRounds(): # Function to get the number of rounds to play
-    r = 1 # Default to 1
+    r = -1 # Default to 1
     if arguments > 1:
         for l in range(1, arguments):
             if sys.argv[l][:2] == "-r":
                 r = sys.argv[l][2:]
-    else:
+    if r == -1:
         r = input(text["nRounds"][lang]) or 1
-    
     return int(r)
 
+def defMode(): # Set Program Language Mode
+    t = "english"
+    if arguments > 1:
+        for l in range(1, arguments):
+            tStr = sys.argv[l]
+            if tStr == "--finnish":
+                t = "finnish"
+            elif tStr == "--english":
+                t = "english"
+            elif tStr == "-h" or tStr == "--help":
+                displayHelp()
+            #elif tStr == "-r" or tStr == "--rules":
+            #    displayRules()
+    return t
 
 def shuffle_word(word): # Function to Shuffle the Word
     word = list(word)
     random.shuffle(word)
     return ''.join(word)
 
-with open(fileName, "r", encoding="utf-8") as f: # Open the File and Read the Lines into an Array
-    arrWord = [line.strip() for line in f]
-
 system('cls') # Clear the screen
+lang = defMode() # Default Language
+fileName = lang + ".lst" # File Name to Read the Words from
 numPlayers = SetPlayers() # Get the number of players
 numRounds = SetRounds() # Get the number of rounds
+
+with open(fileName, "r", encoding="utf-8") as f: # Open the File and Read the Lines into an Array
+    arrWord = [line.strip() for line in f]
 
 def GameRound(plrTurn, plrRnd): # Function to Play a Round of the Game
     global points
