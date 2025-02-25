@@ -23,6 +23,7 @@ import random
 import string
 import sys
 from os import system
+from anna import clearScreen
 
 # Initialize Variables
 random.seed()
@@ -211,7 +212,7 @@ def shuffle_word(word): # Function to Shuffle the Word
     random.shuffle(word)
     return ''.join(word)
 
-system('cls') # Clear the screen
+clearScreen() # Clear the screen
 lang = defMode() # Default Language
 fileName = lang + ".lst" # File Name to Read the Words from
 numPlayers = SetPlayers() # Get the number of players
@@ -260,7 +261,7 @@ playerPoints = [0] * numPlayers
 
 for iTurn in range(numPlayers): # Loop through the number of players
     for iRnd in range(numRounds): # Loop through the number of rounds
-        system('cls') # Clear the screen
+        clearScreen() # Clear the screen
         r = random.randint(0, len(arrWord) - 1) # Randomly select a word from the list
         ansWord = arrWord[r] # Get the word from the list
         scrWord = shuffle_word(ansWord) # Shuffle the word
@@ -269,7 +270,7 @@ for iTurn in range(numPlayers): # Loop through the number of players
         playerPoints[iTurn] += points # Add the points to the player's total points
 
 # Display Final Scores
-system('cls') # Clear the screen
+clearScreen() # Clear the screen
 print(text["finalscores"][lang]) # Print a newline
 for n in range(numPlayers):
     print(text["player"][lang] + str(n + 1) + text["fscored"][lang] + YELLOW + str(playerPoints[n]) + ENDC + text["points"][lang]) # Print the points
