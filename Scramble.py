@@ -9,6 +9,8 @@
 # 1.1.1 - Added Finnish Language Support
 # 1.1.2 - Added Help Screen
 # 1.1.3 - Fixed Command Line Arguments
+# 1.1.4 - OS compatibilty for clearing screen.
+# 1.1.5 - Added functionality to determine winner.
 # 
 # # Written by: Anna Vahtera
 #
@@ -169,7 +171,15 @@ text = {
     "fscored": {
     "english": " scored: ",
     "finnish": " sai: ",
-},
+  },
+    "winner": {
+    "english": "Winner is",
+    "finnish": "Voittaja on",
+  },
+    "congratulations": {
+    "english": "\n Congratulations!",
+    "finnish": "\n Onneksi olkoon!",
+  }  
 }
 
 def SetPlayers(): # Function to get the number of Players
@@ -274,4 +284,7 @@ clearScreen() # Clear the screen
 print(text["finalscores"][lang]) # Print a newline
 for n in range(numPlayers):
     print(text["player"][lang] + str(n + 1) + text["fscored"][lang] + YELLOW + str(playerPoints[n]) + ENDC + text["points"][lang]) # Print the points
+winner = playerPoints.index(max(playerPoints)) + 1
+print(" " + text["winner"][lang] + BOLD + RED + text["player"][lang] + str(winner) + ENDC + "!")
+print(BOLD + YELLOW + text["congratulations"][lang] + ENDC)
 print("\n") # Print a newline
