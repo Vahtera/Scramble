@@ -16,8 +16,9 @@
 # The players have a limited number of turns to guess the word.
 # The player gets points for guessing the word correctly.
 # The program uses ANSI escape codes to color the text.
-#
 ```
+> [!NOTE]
+> Requires Python3.
 
 ```
 Instructions:
