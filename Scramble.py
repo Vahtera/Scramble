@@ -281,10 +281,12 @@ for iTurn in range(numPlayers): # Loop through the number of players
 
 # Display Final Scores
 clearScreen() # Clear the screen
-print(text["finalscores"][lang]) # Print a newline
+print(BOLD + BLACK + text["finalscores"][lang] + ENDC) # Print a newline
 for n in range(numPlayers):
     print(text["player"][lang] + str(n + 1) + text["fscored"][lang] + YELLOW + str(playerPoints[n]) + ENDC + text["points"][lang]) # Print the points
+
+# Display winner
 winner = playerPoints.index(max(playerPoints)) + 1
-print(" " + text["winner"][lang] + BOLD + RED + text["player"][lang] + str(winner) + ENDC + "!")
+print("\n " + text["winner"][lang] + BOLD + RED + text["player"][lang] + str(winner) + ENDC + "!")
 print(BOLD + YELLOW + text["congratulations"][lang] + ENDC)
 print("\n") # Print a newline
