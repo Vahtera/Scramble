@@ -8,6 +8,7 @@
 # 1.1.0 - Added Language Support
 # 1.1.1 - Added Finnish Language Support
 # 1.1.2 - Added Help Screen
+# 1.1.3 - Fixed Command Line Arguments
 # 
 # # Written by: Anna Vahtera
 #
@@ -171,35 +172,35 @@ text = {
 }
 
 def SetPlayers(): # Function to get the number of Players
-    r = -1 # Default to 1 Player
-    if arguments > 1:
+    r = -1
+    if arguments > 1: # Check if there are Command Line Arguments
         for l in range(1, arguments):
-            if sys.argv[l][:2] == "-p":
+            if sys.argv[l][:2] == "-p": # Check if the Argument is for the Number of Players
                 r = sys.argv[l][2:]
     if r == -1:
-        r = input(text["nPlayers"][lang]) or 1
+        r = input(text["nPlayers"][lang]) or 1 # If no input, default to 1
     return int(r)
 
 def SetRounds(): # Function to get the number of rounds to play
-    r = -1 # Default to 1
-    if arguments > 1:
+    r = -1
+    if arguments > 1: # Check if there are Command Line Arguments
         for l in range(1, arguments):
-            if sys.argv[l][:2] == "-r":
+            if sys.argv[l][:2] == "-r": # Check if the Argument is for the Number of Rounds
                 r = sys.argv[l][2:]
     if r == -1:
-        r = input(text["nRounds"][lang]) or 1
+        r = input(text["nRounds"][lang]) or 1 # If no input, default to 1
     return int(r)
 
 def defMode(): # Set Program Language Mode
     t = "english"
-    if arguments > 1:
+    if arguments > 1: # Check if there are Command Line Arguments
         for l in range(1, arguments):
             tStr = sys.argv[l]
-            if tStr == "--finnish":
+            if tStr == "--finnish": # Check if the Argument is for Finnish Language
                 t = "finnish"
-            elif tStr == "--english":
+            elif tStr == "--english": # Check if the Argument is for English Language
                 t = "english"
-            elif tStr == "-h" or tStr == "--help":
+            elif tStr == "-h" or tStr == "--help": # Check if the Argument is for Help
                 displayHelp()
             #elif tStr == "-r" or tStr == "--rules":
             #    displayRules()
