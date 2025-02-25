@@ -1,7 +1,7 @@
 ```
 Instructions:
 
-Usage: Scramble.py [#players] [#rounds] [language]
+Usage: py Scramble.py [#players] [#rounds] [language]
 
 Language is any of the following:
 --english: English language. (Default)
