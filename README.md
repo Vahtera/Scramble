@@ -11,8 +11,10 @@
 # 
 # # Written by: Anna Vahtera
 #
-# This program is a word scramble game. The program reads a list of words from a file and scrambles the word.
-# The players have a limited number of turns to guess the word. The player gets points for guessing the word correctly.
+# This program is a word scramble game.
+# It reads a list of words from a file and scrambles the word.
+# The players have a limited number of turns to guess the word.
+# The player gets points for guessing the word correctly.
 # The program uses ANSI escape codes to color the text.
 #
 ```
