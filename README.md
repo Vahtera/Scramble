@@ -8,6 +8,7 @@
 # 1.1.0 - Added Language Support
 # 1.1.1 - Added Finnish Language Support
 # 1.1.2 - Added Help Screen
+# 1.1.3 - Fixed Command Line Arguments
 # 
 # # Written by: Anna Vahtera
 #
