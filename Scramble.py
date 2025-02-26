@@ -1,3 +1,4 @@
+''' Word Scramble Game '''
 #
 # Word Scramble Game
 # Scramble.py
@@ -11,7 +12,7 @@
 # 1.1.3 - Fixed Command Line Arguments
 # 1.1.4 - OS compatibilty for clearing screen.
 # 1.1.5 - Added functionality to determine winner.
-# 
+#
 # # Written by: Anna Vahtera
 #
 # This program is a word scramble game.
@@ -22,20 +23,20 @@
 #
 
 import random
-import string
 import sys
-from os import system
-from libAnna.anna import clearScreen, openFile
+from libAnna.anna import clear_screen, open_file
 
 # Initialize Variables
 random.seed()
-turns = 3 # Number of turns to play
-points = 5 # Default Points for Correct Answer on First Try
-arguments = len(sys.argv) # Get the Command Line Arguments
-iTurn = 0 # Player Turn
-iRnd = 0 # Round Number
+TURNS = 3  # Number of turns to play
+POINTS = 5  # Default Points for Correct Answer on First Try
+ARGUMENTS = len(sys.argv)  # Get the Command Line Arguments
+I_TURN = 0  # Player Turn
+I_RND = 0  # Round Number
 
-def displayHelp(): # Display Help Screen
+
+def display_help():
+    '''Display Help Screen'''
     print("\n\nInstructions:\n")
     print("Usage: py Scramble.py [#players] [#rounds] [language]\n")
     print("Language is any of the following:")
@@ -43,249 +44,261 @@ def displayHelp(): # Display Help Screen
     print("--finnish: Finnish language.")
     print("\nCommand line arguments:")
     print("-h, --help: this Help screen.")
-    #print("-r, --rules: Display rules.")
+    # print("-r, --rules: Display rules.")
     print("-p#: Number of players.")
     print("-r#: Number of rounds.")
     print("\nIf selecting the language, make sure the required language file is present [\"language.lst\"].\n")
-    exit()
+    sys.exit()
+
 
 # Color Definitions
-WHITE = "\033[37m" # White Text Color
-BLUE = "\033[34m" # Blue Text Color
-YELLOW = "\033[33m" # Yellow Text Color
-GREEN = "\033[32m" # Green Text Color
-RED = "\033[31m" # Red Text Color
-CYAN = "\033[36m" # Cyan Text Color
-PURPLE = "\033[35m" # Purple Text Color
-BLACK = "\033[30m" # Black Text Color
-BOLD = "\033[1m" # Bold Text
-NOBOLD = "\033[22m" # No Bold Text
-ENDC = "\033[0m" # Reset Text Color
+WHITE = "\033[37m"  # White Text Color
+BLUE = "\033[34m"  # Blue Text Color
+YELLOW = "\033[33m"  # Yellow Text Color
+GREEN = "\033[32m"  # Green Text Color
+RED = "\033[31m"  # Red Text Color
+CYAN = "\033[36m"  # Cyan Text Color
+PURPLE = "\033[35m"  # Purple Text Color
+BLACK = "\033[30m"  # Black Text Color
+BOLD = "\033[1m"  # Bold Text
+NOBOLD = "\033[22m"  # No Bold Text
+ENDC = "\033[0m"  # Reset Text Color
 
 # Translatable strings:
-text = {
-  "play-again?": {
-    "english": "Play another round? Y/N [Y]: ",
-    "finnish": "Pelataanko uusi kierros? K/E [K]: ",
-  },
-  "quit": {
-    "english": "Thank you for playing!",
-    "finnish": "Kiitos, että pelasit!",
-  },
-  "players": {
-    "english": " players",
-    "finnish": " pelaajaa",
-  },
-  "player": {
-    "english": " Player ",
-    "finnish": " Pelaaja ",
-  },
-  "lang": {
-    "english": "English",
-    "finnish": "Suomi",
-  },
-  "language": {
-    "english": "Language",
-    "finnish": "Kieli",
-  },
-  "wordlist": {
-    "english": "Wordlist",
-    "finnish": "Sanalista",
-  },
+TEXT = {
+    "play-again?": {
+        "english": "Play another round? Y/N [Y]: ",
+        "finnish": "Pelataanko uusi kierros? K/E [K]: ",
+    },
+    "quit": {
+        "english": "Thank you for playing!",
+        "finnish": "Kiitos, että pelasit!",
+    },
+    "players": {
+        "english": " players",
+        "finnish": " pelaajaa",
+    },
+    "player": {
+        "english": " Player ",
+        "finnish": " Pelaaja ",
+    },
+    "lang": {
+        "english": "English",
+        "finnish": "Suomi",
+    },
+    "language": {
+        "english": "Language",
+        "finnish": "Kieli",
+    },
+    "wordlist": {
+        "english": "Wordlist",
+        "finnish": "Sanalista",
+    },
     "nPlayers": {
-    "english": "\n  Enter the number of players [1]: ",
-    "finnish": "\n  Syötä pelaajien määrä [1]: ",
-  },
+        "english": "\n  Enter the number of players [1]: ",
+        "finnish": "\n  Syötä pelaajien määrä [1]: ",
+    },
     "nRounds": {
-    "english": "\n  Enter the number of rounds [1]: ",
-    "finnish": "\n  Syötä kierrosten määrä [1]: ",
-  },
+        "english": "\n  Enter the number of rounds [1]: ",
+        "finnish": "\n  Syötä kierrosten määrä [1]: ",
+    },
     "scrWord": {
-    "english": "\n  Scrambled Word: ",
-    "finnish": "\n  Sekoitettu Sana: ",
-  },
+        "english": "\n  Scrambled Word: ",
+        "finnish": "\n  Sekoitettu Sana: ",
+    },
     "continue": {
-    "english": "  Press Enter to Continue...",
-    "finnish": "  Paina Enter jatkaaksesi...",
-  },
+        "english": "  Press Enter to Continue...",
+        "finnish": "  Paina Enter jatkaaksesi...",
+    },
     "incorrect": {
-    "english": "\n\n  Incorrect. ",
-    "finnish": "\n\n  Väärin. ",
-  },
+        "english": "\n\n  Incorrect. ",
+        "finnish": "\n\n  Väärin. ",
+    },
     "correct": {
-    "english": "\n\n  Correct!",
-    "finnish": "\n\n  Oikein!",
-  },
+        "english": "\n\n  Correct!",
+        "finnish": "\n\n  Oikein!",
+    },
     "correctword": {
-    "english": "The correct word is: ",
-    "finnish": "Oikea sana on: ",
-  },
+        "english": "The correct word is: ",
+        "finnish": "Oikea sana on: ",
+    },
     "correctwordbegins": {
-    "english": "The correct word begins with:",
-    "finnish": "Oikea sana alkaa:",
-  },
+        "english": "The correct word begins with:",
+        "finnish": "Oikea sana alkaa:",
+    },
     "scored": {
-    "english": "  You scored ",
-    "finnish": "  Sait ",
-  },
+        "english": "  You scored ",
+        "finnish": "  Sait ",
+    },
     "points": {
-    "english": " points!\n",
-    "finnish": " pistettä!\n",
-  },
+        "english": " points!\n",
+        "finnish": " pistettä!\n",
+    },
     "youhave": {
-    "english": " You have ",
-    "finnish": " Sinulla on ",
-  },
+        "english": " You have ",
+        "finnish": " Sinulla on ",
+    },
     "turnsleft": {
-    "english": " turns to guess!",
-    "finnish": " kierrosta aikaa arvata!",
-  },
+        "english": " turns to guess!",
+        "finnish": " kierrosta aikaa arvata!",
+    },
     "guessword": {
-    "english": "\n  Guess the word!",
-    "finnish": "\n  Arvaa sana!",
-  },
+        "english": "\n  Guess the word!",
+        "finnish": "\n  Arvaa sana!",
+    },
     "thisis": {
-    "english": " This is your ",
-    "finnish": " Tämä on ",
-  },
+        "english": " This is your ",
+        "finnish": " Tämä on ",
+    },
     "last": {
-    "english": "last",
-    "finnish": "viimeinen",
-  },
+        "english": "last",
+        "finnish": "viimeinen",
+    },
     "turntoguess": {
-    "english": " turn to guess!",
-    "finnish": " kierroksesi arvata!",
-  },
+        "english": " turn to guess!",
+        "finnish": " kierroksesi arvata!",
+    },
     "word": {
-    "english": " / Word ",
-    "finnish": " / Sana ",
-  },
+        "english": " / Word ",
+        "finnish": " / Sana ",
+    },
     "guess": {
-    "english": ", Guess ",
-    "finnish": ", Arvaus ",
-  },
+        "english": ", Guess ",
+        "finnish": ", Arvaus ",
+    },
     "finalscores": {
-    "english": "\n Final Scores for the game:\n",
-    "finnish": "\n Pelin lopulliset pisteet:\n",
-  },
+        "english": "\n Final Scores for the game:\n",
+        "finnish": "\n Pelin lopulliset pisteet:\n",
+    },
     "fscored": {
-    "english": " scored: ",
-    "finnish": " sai: ",
-  },
+        "english": " scored: ",
+        "finnish": " sai: ",
+    },
     "winner": {
-    "english": "Winner is",
-    "finnish": "Voittaja on",
-  },
+        "english": "Winner is",
+        "finnish": "Voittaja on",
+    },
     "congratulations": {
-    "english": "\n Congratulations!",
-    "finnish": "\n Onneksi olkoon!",
-  }  
+        "english": "\n Congratulations!",
+        "finnish": "\n Onneksi olkoon!",
+    }
 }
 
-def SetPlayers(): # Function to get the number of Players
-    r = -1
-    if arguments > 1: # Check if there are Command Line Arguments
-        for l in range(1, arguments):
-            if sys.argv[l][:2] == "-p" and len(sys.argv[l]) > 2: # Check if the Argument is for the Number of Players
-                r = sys.argv[l][2:]
-    if r == -1:
-        r = input(text["nPlayers"][lang]) or 1 # If no input, default to 1
-    return int(r)
 
-def SetRounds(): # Function to get the number of rounds to play
-    r = -1
-    if arguments > 1: # Check if there are Command Line Arguments
-        for l in range(1, arguments):
-            if sys.argv[l][:2] == "-r" and len(sys.argv[l]) > 2: # Check if the Argument is for the Number of Rounds
-                r = sys.argv[l][2:]
-    if r == -1:
-        r = input(text["nRounds"][lang]) or 1 # If no input, default to 1
-    return int(r)
+def set_players():
+    '''Function to get the number of Players'''
+    p = -1
+    if ARGUMENTS > 1:  # Check if there are Command Line Arguments
+        for l in range(1, ARGUMENTS):
+            if sys.argv[l][:2] == "-p" and len(sys.argv[l]) > 2:  # Check if the Argument is for the Number of Players
+                p = sys.argv[l][2:]
+    if p == -1:
+        p = input(TEXT["nPlayers"][LANG]) or 1  # If no input, default to 1
+    return int(p)
 
-def defMode(): # Set Program Language Mode
+
+def set_rounds():
+    '''Function to get the number of rounds to play'''
+    k = -1
+    if ARGUMENTS > 1:  # Check if there are Command Line Arguments
+        for l in range(1, ARGUMENTS):
+            if sys.argv[l][:2] == "-r" and len(sys.argv[l]) > 2:  # Check if the Argument is for the Number of Rounds
+                k = sys.argv[l][2:]
+    if k == -1:
+        k = input(TEXT["nRounds"][LANG]) or 1  # If no input, default to 1
+    return int(k)
+
+
+def def_mode():
+    '''Set Program Language Mode'''
     t = "english"
-    if arguments > 1: # Check if there are Command Line Arguments
-        for l in range(1, arguments):
-            tStr = sys.argv[l]
-            if tStr == "--finnish": # Check if the Argument is for Finnish Language
+    if ARGUMENTS > 1:  # Check if there are Command Line Arguments
+        for l in range(1, ARGUMENTS):
+            t_str = sys.argv[l]
+            if t_str == "--finnish":  # Check if the Argument is for Finnish Language
                 t = "finnish"
-            elif tStr == "--english": # Check if the Argument is for English Language
+            elif t_str == "--english":  # Check if the Argument is for English Language
                 t = "english"
-            elif tStr == "-h" or tStr == "--help": # Check if the Argument is for Help
-                displayHelp()
-            #elif tStr == "-r" or tStr == "--rules":
+            elif t_str in('-h', '--help'):  # Check if the Argument is for Help
+                display_help()
+            # elif t_str == "-r" or t_str == "--rules":
             #    displayRules()
     return t
 
-def shuffle_word(word): # Function to Shuffle the Word
+
+def shuffle_word(word):
+    '''Function to Shuffle the Word'''
     word = list(word)
     random.shuffle(word)
     return ''.join(word)
 
-clearScreen() # Clear the screen
-lang = defMode() # Default Language
-fileName = lang + ".lst" # File Name to Read the Words from
-numPlayers = SetPlayers() # Get the number of players
-numRounds = SetRounds() # Get the number of rounds
 
-arrWord = openFile(fileName)
+clear_screen()  # Clear the screen
+LANG = def_mode()  # Default Language
+FILE_NAME = LANG + ".lst"  # File Name to Read the Words from
+NUM_PLAYERS = set_players()  # Get the number of players
+NUM_ROUNDS = set_rounds()  # Get the number of rounds
 
-def GameRound(plrTurn, plrRnd): # Function to Play a Round of the Game
-    global points
-    global numPlayers
-    global arrWord
-    global ansWord
-    global scrWord
-    global turns
-    global playerPoints
-    global iTurn
+ARR_WORD = open_file(FILE_NAME)
 
-    print(BOLD + BLACK + text["scrWord"][lang] + CYAN, scrWord.lower() + ENDC) # Print the scrambled word
 
-    for l in range(turns): # Loop through the number of turns
-        print(BOLD + GREEN + text["guessword"][lang] + ENDC + text["youhave"][lang] + YELLOW + str(3 - l) + ENDC + text["turnsleft"][lang]) # Print the game title
-        inputWord = input("\n " + text["player"][lang] + str(plrTurn + 1) + text["word"][lang] + str(plrRnd + 1) + text["guess"][lang] + str(l + 1) + ": " + WHITE) # Get the user input
+def game_round(plr_turn, plr_rnd):
+    '''Function to Play a Round of the Game'''
+    global POINTS
+    global NUM_PLAYERS
+    global ARR_WORD
+    global ANS_WORD
+    global SCR_WORD
+    global TURNS
+    global PLAYER_POINTS
+    global I_TURN
 
-        if inputWord.lower() == ansWord.lower(): # Check if the input word is the same as the answer
-            print( GREEN + text["correct"][lang] + "\n" + ENDC) # Print correct if the input is correct
-            print(text["scored"][lang] + YELLOW + str(points) + ENDC + text["points"][lang]) # Print the points
-            go = input(text["continue"][lang]) # Wait for the user to press Enter")
+    print(BOLD + BLACK + TEXT["scrWord"][LANG] + CYAN, SCR_WORD.lower() + ENDC)  # Print the scrambled word
+
+    for l in range(TURNS):  # Loop through the number of turns
+        print(BOLD + GREEN + TEXT["guessword"][LANG] + ENDC + TEXT["youhave"][LANG] + YELLOW + str(3 - l) + ENDC + TEXT["turnsleft"][LANG])  # Print the game title
+        input_word = input("\n " + TEXT["player"][LANG] + str(plr_turn + 1) + TEXT["word"][LANG] + str(plr_rnd + 1) + TEXT["guess"][LANG] + str(l + 1) + ": " + WHITE)  # Get the user input
+
+        if input_word.lower() == ANS_WORD.lower():  # Check if the input word is the same as the answer
+            print(GREEN + TEXT["correct"][LANG] + "\n" + ENDC)  # Print correct if the input is correct
+            print(TEXT["scored"][LANG] + YELLOW + str(POINTS) + ENDC + TEXT["points"][LANG])  # Print the points
+            input(TEXT["continue"][LANG])  # Wait for the user to press Enter")
             break
+
+        print(RED + TEXT["incorrect"][LANG] + ENDC + TEXT["correctwordbegins"][LANG] + GREEN, ANS_WORD[:l + 1].capitalize() + ENDC)  # Print the correct word if the input is incorrect
+        POINTS -= 1
+
+    if input_word.lower() != ANS_WORD.lower():
+        print(BOLD + GREEN + TEXT["guessword"][LANG] + ENDC + TEXT["thisis"][LANG] + YELLOW + TEXT["last"][LANG] + ENDC + TEXT["turntoguess"][LANG])  # Print the game title
+        input_word = input("\n\n  Guess " + str(TURNS + 1) + ": " + WHITE)  # Get the user input
+        if input_word.lower() == ANS_WORD.lower():  # Check if the input word is the same as the answer
+            print(GREEN + TEXT["correct"][LANG] + ENDC)  # Print correct if the input is correct
         else:
-            print(RED + text["incorrect"][lang] + ENDC + text["correctwordbegins"][lang] + GREEN, ansWord[:l + 1].capitalize() + ENDC) # Print the correct word if the input is incorrect
-            points -= 1 
-    
-    if inputWord.lower() != ansWord.lower():
-        print(BOLD + GREEN + text["guessword"][lang] + ENDC + text["thisis"][lang] + YELLOW + text["last"][lang] + ENDC + text["turntoguess"][lang]) # Print the game title
-        inputWord = input("\n\n  Guess " + str(turns + 1) + ": " + WHITE) # Get the user input
-        if inputWord.lower() == ansWord.lower(): # Check if the input word is the same as the answer
-            print( GREEN + text["correct"][lang] + ENDC) # Print correct if the input is correct
-        else:
-            print(RED + text["incorrect"][lang] + ENDC + text["correctword"][lang] + GREEN, ansWord.capitalize() + ENDC) # Print the correct word
-            points = 0
-            go = input(text["continue"][lang]) # Wait for the user to press Enter")
+            print(RED + TEXT["incorrect"][LANG] + ENDC + TEXT["correctword"][LANG] + GREEN, ANS_WORD.capitalize() + ENDC)  # Print the correct word
+            POINTS = 0
+            input(TEXT["continue"][LANG])  # Wait for the user to press Enter")
 
 # Set all player's points to 0 to start
-playerPoints = [0] * numPlayers
+PLAYER_POINTS = [0] * NUM_PLAYERS
 
-for iTurn in range(numPlayers): # Loop through the number of players
-    for iRnd in range(numRounds): # Loop through the number of rounds
-        clearScreen() # Clear the screen
-        r = random.randint(0, len(arrWord) - 1) # Randomly select a word from the list
-        ansWord = arrWord[r] # Get the word from the list
-        scrWord = shuffle_word(ansWord) # Shuffle the word
-        points = len(ansWord) # Set the points to the length of the word
-        GameRound(iTurn, iRnd) # Play a Round of the Game
-        playerPoints[iTurn] += points # Add the points to the player's total points
+for I_TURN in range(NUM_PLAYERS):  # Loop through the number of players
+    for I_RND in range(NUM_ROUNDS):  # Loop through the number of rounds
+        clear_screen()  # Clear the screen
+        r = random.randint(0, len(ARR_WORD) - 1)  # Randomly select a word from the list
+        ANS_WORD = ARR_WORD[r]  # Get the word from the list
+        SCR_WORD = shuffle_word(ANS_WORD)  # Shuffle the word
+        POINTS = len(ANS_WORD)  # Set the points to the length of the word
+        game_round(I_TURN, I_RND)  # Play a Round of the Game
+        PLAYER_POINTS[I_TURN] += POINTS  # Add the points to the player's total points
 
 # Display Final Scores
-clearScreen() # Clear the screen
-print(BOLD + BLACK + text["finalscores"][lang] + ENDC) # Print a newline
-for n in range(numPlayers):
-    print(text["player"][lang] + str(n + 1) + text["fscored"][lang] + YELLOW + str(playerPoints[n]) + ENDC + text["points"][lang]) # Print the points
+clear_screen()  # Clear the screen
+print(BOLD + BLACK + TEXT["finalscores"][LANG] + ENDC)  # Print a newline
+for n in range(NUM_PLAYERS):
+    print(TEXT["player"][LANG] + str(n + 1) + TEXT["fscored"][LANG] + YELLOW + str(PLAYER_POINTS[n]) + ENDC + TEXT["points"][LANG])  # Print the points
 
 # Display winner
-winner = playerPoints.index(max(playerPoints)) + 1
-print("\n " + text["winner"][lang] + BOLD + RED + text["player"][lang] + str(winner) + ENDC + "!")
-print(BOLD + YELLOW + text["congratulations"][lang] + ENDC)
-print("\n") # Print a newline
+WINNER = PLAYER_POINTS.index(max(PLAYER_POINTS)) + 1
+print("\n " + TEXT["winner"][LANG] + BOLD + RED + TEXT["player"][LANG] + str(WINNER) + ENDC + "!")
+print(BOLD + YELLOW + TEXT["congratulations"][LANG] + ENDC)
+print("\n")  # Print a newline
