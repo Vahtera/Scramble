@@ -25,7 +25,7 @@ import random
 import string
 import sys
 from os import system
-from anna import clearScreen
+from libAnna.anna import clearScreen, openFile
 
 # Initialize Variables
 random.seed()
@@ -228,8 +228,7 @@ fileName = lang + ".lst" # File Name to Read the Words from
 numPlayers = SetPlayers() # Get the number of players
 numRounds = SetRounds() # Get the number of rounds
 
-with open(fileName, "r", encoding="utf-8") as f: # Open the File and Read the Lines into an Array
-    arrWord = [line.strip() for line in f]
+arrWord = openFile(fileName)
 
 def GameRound(plrTurn, plrRnd): # Function to Play a Round of the Game
     global points
