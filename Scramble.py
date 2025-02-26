@@ -12,6 +12,8 @@
 # 1.1.3 - Fixed Command Line Arguments
 # 1.1.4 - OS compatibilty for clearing screen.
 # 1.1.5 - Added functionality to determine winner.
+# 1.1.6 - Changed to using libAnna for common functions.
+# 1.1.7 - Formatted code to conform to PEP 8. Mostly.
 #
 # # Written by: Anna Vahtera
 #
