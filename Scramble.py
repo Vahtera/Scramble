@@ -186,7 +186,7 @@ def SetPlayers(): # Function to get the number of Players
     r = -1
     if arguments > 1: # Check if there are Command Line Arguments
         for l in range(1, arguments):
-            if sys.argv[l][:2] == "-p": # Check if the Argument is for the Number of Players
+            if sys.argv[l][:2] == "-p" and len(sys.argv[l]) > 2: # Check if the Argument is for the Number of Players
                 r = sys.argv[l][2:]
     if r == -1:
         r = input(text["nPlayers"][lang]) or 1 # If no input, default to 1
@@ -196,7 +196,7 @@ def SetRounds(): # Function to get the number of rounds to play
     r = -1
     if arguments > 1: # Check if there are Command Line Arguments
         for l in range(1, arguments):
-            if sys.argv[l][:2] == "-r": # Check if the Argument is for the Number of Rounds
+            if sys.argv[l][:2] == "-r" and len(sys.argv[l]) > 2: # Check if the Argument is for the Number of Rounds
                 r = sys.argv[l][2:]
     if r == -1:
         r = input(text["nRounds"][lang]) or 1 # If no input, default to 1
