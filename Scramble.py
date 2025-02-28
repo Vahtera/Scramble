@@ -270,8 +270,8 @@ def game_round(plr_turn, plr_rnd):
 # Set all player's points to 0 to start
 PLAYER_POINTS = [0] * NUM_PLAYERS
 
-for I_TURN in range(NUM_PLAYERS):  # Loop through the number of players
-    for I_RND in range(NUM_ROUNDS):  # Loop through the number of rounds
+for I_RND in range(NUM_ROUNDS):  # Loop through the number of rounds
+    for I_TURN in range(NUM_PLAYERS):  # Loop through the number of players
         clear_screen()  # Clear the screen
         r = random.randint(0, len(ARR_WORD) - 1)  # Randomly select a word from the list
         ANS_WORD = ARR_WORD[r]  # Get the word from the list
